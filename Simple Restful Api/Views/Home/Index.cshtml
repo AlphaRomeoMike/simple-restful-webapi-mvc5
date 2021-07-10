@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Consuming our first Web API</h2>
+
+<input type="text" class="form-control" placeholder="Enter id" id="id" /> <br />
+<input type="button" class="btn btn-outline-dark" value="Get all employees" id="getall" />
+<input type="button" class="btn btn-outline-danger" value="Clear employees" id="clearall" />
+<input type="button" class="btn btn-outline-danger" value="Get employee" id="getone" />
+
+<div id="showdata">
+    <br />
+</div>
+
+<script defer>
+    $(document).ready(function () {
+        $('#getone').click(function () {
+            var id = $('#id').val();
+            $.getJSON('/api/Employee/' + id, function (response) {
+                var item = "<h4>" + response + "</h4>";
+
+                $(item).appendTo("#showdata");
+            })
+        })
+        $('#clearall').click(function () {
+            $('#showdata').empty()
+        })
+        $("#getall").click(function () {
+            $.getJSON('/api/Employee', function (response) {
+                $.each(response, function (key, value) {
+                    var item = "<h4>" + value + "</h4>";
+
+                    $(item).appendTo("#showdata");
+                })
+            })
+        });
+    })
+</script>
+
